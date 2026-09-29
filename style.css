@@ -906,3 +906,31 @@ button:focus-visible {
         grid-template-columns: 1fr;
     }
 }
+
+
+/* Vòng loading */
+.loader {
+    width: 50px;
+    height: 50px;
+    border: 6px solid #e0e0e0; 
+    border-top-color: #3498db; 
+    border-radius: 50%; 
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Khung chứa loading phủ kín toàn màn hình */
+.loader-wrapper {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* Đảm bảo loading luôn nổi lên trên cùng */
+}
