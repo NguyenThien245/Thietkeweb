@@ -1,0 +1,22 @@
+/* Xóa margin mặc định của trình duyệt để không bị thanh cuộn */
+body {
+  margin: 0;
+}
+
+.container {
+  display: flex;
+  justify-content: center; /* Căn giữa theo chiều ngang (trục chính) */
+  align-items: center;     /* Căn giữa theo chiều dọc (trục phụ) */
+  min-height: 100vh;
+  background-color: #f4f6f8;
+}
+
+.box {
+  padding: 24px 32px;
+  background-color: #e0f2fe; /* Màu xanh dương nhạt dịu mắt */
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 119, 182, 0.15), 0 2px 6px rgba(0, 0, 0, 0.06); /* Đổ bóng nhẹ nhàng */
+  text-align: center;
+  text-transform: uppercase; /* Toàn bộ chữ chuyển thành in hoa */
+  letter-spacing: 0.5px;     /* Giãn cách chữ giúp chữ in hoa thoáng và dễ đọc hơn */
+}

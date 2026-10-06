@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Giải thích: Thẻ <meta name="description"> cung cấp mô tả ngắn gọn về nội dung trang.
+         SEO: Rất quan trọng vì nội dung này thường hiển thị dưới dạng snippet trên kết quả tìm kiếm (SERP), giúp tăng tỷ lệ click (CTR).
+         Accessibility: Giúp người dùng có thể hiểu trước mục đích trang web qua các công cụ đọc nếu được cấu hình. -->
+    <meta name="description" content="Trang web Portfolio cá nhân của Nguyễn Minh Thiên - Lập trình viên Front-end chuyên nghiệp, ứng dụng hệ thống CSS Variables, CSS Grid Responsive và Media Queries cho dịch vụ và dự án.">
+    
+    <!-- Giải thích: Thẻ <title> xác định tiêu đề của tài liệu HTML.
+         SEO: Là yếu tố xếp hạng cực kỳ quan trọng, cho bot biết chính xác chủ đề của trang.
+         Accessibility: Khi trang tải, trình đọc màn hình (Screen Reader) sẽ đọc thẻ title đầu tiên để báo cho người dùng biết họ đang ở trang nào. -->
+    <title>Portfolio - Nguyễn Minh Thiên | Front-end Developer</title>
+
+    <!-- Google Fonts hỗ trợ hiển thị typography sắc nét, hiện đại -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Liên kết tới file CSS riêng biệt -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- AOS CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
+<body>
+<div class="loader-wrapper" id="preloader">
+    <div class="loader"></div>
+</div>
+    <!-- =====================================================================
+         BỐ CỤC CHÍNH (PORTFOLIO CONTAINER)
+         - Desktop (>= 768px): CSS Grid 2 cột (Sidebar chiếm 320px, Main chiếm 1fr)
+         - Mobile (< 768px): CSS Grid chuyển thành 1 cột duy nhất, Sidebar chuyển lên đầu trang
+         ===================================================================== -->
+    <div class="portfolio-container">
+        
+        <!-- =================================================================
+             CỘT 1: SIDEBAR (<aside>)
+             Chứa Profile, Avatar, Menu điều hướng nhanh và Mạng xã hội.
+             Desktop: Cố định bên trái (Sticky).
+             Mobile: Đưa lên đầu trang (Order: -1) hoặc ẩn theo cấu hình.
+             ================================================================= -->
+        <aside class="portfolio-sidebar" id="sidebar" aria-label="Hồ sơ cá nhân và Điều hướng">
+            <div class="sidebar-inner">
+                
+                <!-- Avatar & Huy hiệu trạng thái -->
+                <div class="profile-badge-wrapper">
+                    <div class="avatar-box" aria-hidden="true">
+                        <span>MT</span>
+                    </div>
+                    <div class="status-indicator">
+                        <span class="status-dot"></span>
+                        <span class="status-text">Sẵn sàng nhận dự án</span>
+                    </div>
+                </div>
+
+                <!-- Tên & Chức danh: Ứng dụng biến --color-text-main & --color-primary -->
+                <div class="profile-info">
+                    <h1 class="profile-name">Nguyễn Minh Thiên</h1>
+                    <p class="profile-role">Front-end Web Developer</p>
+                    <p class="profile-bio">Chuyên gia xây dựng giao diện web hiệu năng cao, trải nghiệm trực quan với hệ thống CSS Variables và CSS Grid Responsive.</p>
+                </div>
+
+                <!-- Giải thích: Thẻ <nav> bọc các liên kết điều hướng chính.
+                     SEO: Định hướng cho spider/bot thu thập dữ liệu về cách các mục liên kết với nhau.
+                     Accessibility: Tạo ra một 'navigation landmark'. Người dùng phím tab có thể dễ dàng chuyển vùng. -->
+                <nav class="sidebar-nav" aria-label="Điều hướng chính">
+                    <ul>
+                        <li><a href="#about" class="nav-link">Giới thiệu bản thân</a></li>
+                        <li><a href="#services" class="nav-link">Dịch vụ cung cấp</a></li>
+                        <li><a href="#projects" class="nav-link">Dự án & Kỹ năng</a></li>
+                        <li><a href="#contact" class="nav-link">Liên hệ trực tiếp</a></li>
+                    </ul>
+                </nav>
+
+                <!-- Liên kết mạng xã hội & liên hệ nhanh -->
+                <div class="sidebar-social">
+                    <span class="social-heading">Kết nối trực tuyến</span>
+                    <div class="social-buttons">
+                        <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="Trang GitHub của Nguyễn Minh Thiên (mở tab mới)">GitHub</a>
+                        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="Hồ sơ LinkedIn của Nguyễn Minh Thiên (mở tab mới)">LinkedIn</a>
+                    </div>
+                </div>
+
+            </div>
+        </aside>
+
+        <!-- =================================================================
+             CỘT 2: MAIN (<main>)
+             Chứa toàn bộ nội dung cốt lõi của Portfolio (Giới thiệu, Dịch vụ, Dự án, Liên hệ).
+             Desktop: Chiếm cột bên phải (1fr).
+             Mobile: Tự động xuống dưới Sidebar trong bố cục 1 cột duy nhất.
+             ================================================================= -->
+        <main class="portfolio-main">
+
+            <!-- Section 1: Giới thiệu bản thân -->
+            <section data-aos="fade-up" id="about" class="content-section" aria-labelledby="about-heading">
+                <div class="section-header">
+                    <span class="section-eyebrow">Khám phá</span>
+                    <h2 id="about-heading" class="section-title">Giới thiệu bản thân</h2>
+                </div>
+                
+                <p class="lead-text">Xin chào! Tôi là một Lập trình viên Front-end với 3 năm kinh nghiệm trong việc xây dựng các ứng dụng web tương tác hiện đại. Tôi đam mê kiến trúc Semantic HTML, CSS Variables, CSS Grid linh hoạt và tối ưu hóa hiệu suất website đạt chuẩn Accessibility quốc tế.</p>
+                
+                <!-- Tạm thời ẩn thẻ <img> bên dưới. Khi nào có tệp ảnh thật, hãy xóa cặp dấu comment -->
+                <!-- 
+                <img src="images/avatar.jpg" alt="Ảnh chân dung Nguyễn Minh Thiên" width="250" height="250">
+                -->
+
+                <!-- Khối chỉ số ấn tượng (Metrics Grid) -->
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <span class="metric-value">03+</span>
+                        <span class="metric-label">Năm kinh nghiệm</span>
+                    </div>
+                    <div class="metric-card">
+                        <span class="metric-value">25+</span>
+                        <span class="metric-label">Dự án hoàn thành</span>
+                    </div>
+                    <div class="metric-card">
+                        <span class="metric-value">100%</span>
+                        <span class="metric-label">Chuẩn Responsive & SEO</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- =============================================================
+                 Section 2: Dịch vụ cung cấp (.services-container)
+                 Áp dụng CSS Grid và Media Queries:
+                 - Màn hình > 1024px: 4 cột, gap: 20px
+                 - Màn hình 768px - 1024px: 2 cột, gap: 20px
+                 - Màn hình < 768px: 1 cột, gap: 20px
+                 ============================================================= -->
+            <section data-aos="fade-up" id="services" class="content-section" aria-labelledby="services-heading">
+                <div class="section-header">
+                    <span class="section-eyebrow">Giải pháp chuyên môn</span>
+                    <h2 id="services-heading" class="section-title">Dịch vụ cung cấp</h2>
+                </div>
+                
+                <p class="section-desc">Cung cấp các giải pháp phát triển giao diện website chất lượng cao, tối ưu hóa toàn diện về tốc độ, chuẩn SEO và trải nghiệm người dùng trên mọi thiết bị.</p>
+
+                <!-- KHỐI SERVICES-CONTAINER THEO ĐÚNG YÊU CẦU ĐỀ BÀI -->
+                <div class="services-container">
+                    
+                    <div class="service-card">
+                        <div class="service-icon" aria-hidden="true">💻</div>
+                        <h3 class="service-title">Thiết Kế Front-end</h3>
+                        <p class="service-desc">Chuyển đổi bản thiết kế Figma sang mã nguồn chuẩn Semantic HTML5, CSS3 và Modern JavaScript.</p>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-icon" aria-hidden="true">📱</div>
+                        <h3 class="service-title">Responsive Design</h3>
+                        <p class="service-desc">Giao diện tự thích ứng mượt mà trên Desktop, Tablet và Mobile với CSS Grid và Flexbox linh hoạt.</p>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-icon" aria-hidden="true">⚡</div>
+                        <h3 class="service-title">Tối Ưu Hiệu Năng & SEO</h3>
+                        <p class="service-desc">Tăng tốc độ tải trang dưới 2s, đạt điểm Core Web Vitals cao và chuẩn SEO On-page Google.</p>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-icon" aria-hidden="true">♿</div>
+                        <h3 class="service-title">Chuẩn WCAG Accessibility</h3>
+                        <p class="service-desc">Xây dựng trang web tiếp cận toàn diện cho mọi người dùng, hỗ trợ bàn phím và Screen Reader.</p>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- Section 3: Dự án & Kỹ năng -->
+            <section data-aos="fade-up" id="projects" class="content-section" aria-labelledby="projects-heading">
+                <div class="section-header">
+                    <span class="section-eyebrow">Portfolio</span>
+                    <h2 id="projects-heading" class="section-title">Dự án nổi bật & Kỹ năng</h2>
+                </div>
+                
+                <p class="section-desc">Dưới đây là một số sản phẩm tiêu biểu được thiết kế với tư duy hệ thống màu sắc logic, trực quan và trải nghiệm người dùng tối ưu trên mọi kích thước màn hình.</p>
+
+                <div class="projects-container">
+                    <!-- Giải thích: Thẻ <article> dùng để bao bọc một nội dung độc lập, tự chứa và có thể tái sử dụng. -->
+                    <article class="project-card">
+                        <div class="project-header">
+                            <span class="project-badge">Web Application</span>
+                            <!-- Áp dụng mức xám thứ 3: Text Muted cho thời gian -->
+                            <time class="project-meta-time" datetime="2024">2024 - Hiện tại</time>
+                        </div>
+
+                        <!-- Áp dụng mức xám thứ 1: Text Main cho tiêu đề H3 -->
+                        <h3 class="project-title">Ứng dụng Quản lý Công việc (Task Flow)</h3>
+
+                        <!-- Áp dụng mức xám thứ 2: Text Body cho đoạn mô tả -->
+                        <p class="project-description">Một ứng dụng web giúp quản lý thời gian và tiến độ công việc dựa trên phương pháp Pomodoro. Ứng dụng cung cấp bảng Kanban trực quan, thống kê hiệu suất cá nhân và tự động thích ứng với CSS Grid Responsive.</p>
+                        
+                        <div class="skills-block">
+                            <h4 class="skills-title">Kỹ năng & Công nghệ:</h4>
+                            <ul class="tag-list">
+                                <li class="tag-item">Semantic HTML5</li>
+                                <li class="tag-item">Web Accessibility (WCAG 2.1)</li>
+                                <li class="tag-item">CSS Grid & Flexbox</li>
+                                <li class="tag-item">CSS Media Queries</li>
+                                <li class="tag-item">Vanilla JS (ES6+)</li>
+                            </ul>
+                        </div>
+
+                        <div class="project-links">
+                            <a href="#contact" class="btn btn-primary" aria-label="Xem chi tiết dự án Ứng dụng Quản lý Công việc">Xem chi tiết</a>
+                            <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="btn btn-secondary-outline" aria-label="Xem mã nguồn dự án trên GitHub">Mã nguồn GitHub</a>
+                        </div>
+                    </article>
+
+                    <article class="project-card">
+                        <div class="project-header">
+                            <span class="project-badge">E-Commerce</span>
+                            <!-- Áp dụng mức xám thứ 3: Text Muted cho thời gian -->
+                            <time class="project-meta-time" datetime="2024">2024</time>
+                        </div>
+
+                        <!-- Áp dụng mức xám thứ 1: Text Main cho tiêu đề H3 -->
+                        <h3 class="project-title">Trang thương mại điện tử X (Retail Platform)</h3>
+
+                        <!-- Áp dụng mức xám thứ 2: Text Body cho đoạn mô tả -->
+                        <p class="project-description">Giao diện Front-end cho một nền tảng bán lẻ trực tuyến hiện đại với thời gian tải trang dưới 2 giây, hỗ trợ chế độ lọc đa năng và tương thích mượt mà trên Desktop, Tablet, Mobile.</p>
+                        
+                        <div class="skills-block">
+                            <h4 class="skills-title">Kỹ năng & Công nghệ:</h4>
+                            <ul class="tag-list">
+                                <li class="tag-item">Mobile-First Strategy</li>
+                                <li class="tag-item">Core Web Vitals Tối ưu</li>
+                                <li class="tag-item">CSS Variables & Tokens</li>
+                                <li class="tag-item">Structured Data Schema</li>
+                            </ul>
+                        </div>
+
+                        <div class="project-links">
+                            <a href="#contact" class="btn btn-primary" aria-label="Xem chi tiết dự án Trang thương mại điện tử X">Xem chi tiết</a>
+                            <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="btn btn-secondary-outline" aria-label="Xem bản xem trước dự án">Bản Demo</a>
+                        </div>
+                    </article>
+                </div>
+
+            </section>
+
+            <!-- Section 4: Liên hệ -->
+            <section data-aos="fade-up" id="contact" class="content-section" aria-labelledby="contact-heading">
+                <div class="section-header">
+                    <span class="section-eyebrow">Kết nối</span>
+                    <h2 id="contact-heading" class="section-title">Liên hệ</h2>
+                </div>
+                
+                <p class="section-desc">Tôi luôn cởi mở với các cơ hội hợp tác mới, dự án Freelance hoặc các vị trí Front-end toàn thời gian. Đừng ngần ngại liên lạc với tôi qua:</p>
+                
+                <div class="contact-card-grid">
+                    <div class="contact-item-card">
+                        <span class="contact-label">Hộp thư điện tử</span>
+                        <a href="mailto:nguyenminhthien@example.com" class="contact-link" aria-label="Gửi email cho Nguyễn Minh Thiên">nguyenminhthien@example.com</a>
+                        <span class="contact-hint">Phản hồi thông thường trong vòng 24h</span>
+                    </div>
+
+                    <div class="contact-item-card">
+                        <span class="contact-label">Mạng xã hội & Hồ sơ lập trình</span>
+                        <div class="social-links-wrap">
+                            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Hồ sơ LinkedIn của Nguyễn Minh Thiên (mở tab mới)">LinkedIn</a>
+                            <span class="divider" aria-hidden="true">|</span>
+                            <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Trang GitHub của Nguyễn Minh Thiên (mở tab mới)">GitHub</a>
+                        </div>
+                        <span class="contact-hint">Cập nhật mã nguồn mở và chia sẻ kinh nghiệm</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Giải thích: Thẻ <footer> bọc thông tin bản quyền và chú thích công nghệ. -->
+            <footer class="site-footer">
+                <div class="footer-container">
+                    <p class="copyright">&copy; 2026 Nguyễn Minh Thiên. Thiết kế với Semantic HTML & WCAG Accessibility.</p>
+                    <p class="footer-credit">Tích hợp bố cục <strong>.services-container</strong> và <strong>CSS Grid Responsive</strong> tự động thích ứng qua Media Queries.</p>
+                </div>
+            </footer>
+
+        </main>
+    </div>
+<script>
+    window.addEventListener("load", function () {
+        // Dùng setTimeout để đợi đúng 2000 mili-giây (tức là 2 giây)
+        setTimeout(function() {
+            document.getElementById("preloader").style.display = "none";
+        }, 2000); 
+    });
+</script>
+
+<!-- AOS JS -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init({
+        duration: 1000,
+        once: true
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flexbox Center Example</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh; /* Đảm bảo phủ trọn màn hình và không bị tràn nếu nội dung dài */
+      background-color: #f4f6f8;
+    }
+
+    .box {
+      padding: 24px 32px;
+      background-color: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="box">
+      <h1>Chính giữa trang!</h1>
+      <p>Nội dung này được căn giữa theo cả chiều dọc và ngang.</p>
+    </div>
+  </div>
+</body>
+</html>

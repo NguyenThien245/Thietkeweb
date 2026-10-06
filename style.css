@@ -934,3 +934,951 @@ button:focus-visible {
     align-items: center;
     z-index: 9999; /* Đảm bảo loading luôn nổi lên trên cùng */
 }
+
+/* ==========================================================================
+   NÚT LIÊN HỆ CỐ ĐỊNH (FLOATING CONTACT BUTTON - PULSE ANIMATION)
+   - Cố định góc dưới bên phải màn hình: position: fixed
+   - Nút tròn màu xanh, đổ bóng, biểu tượng nằm chính giữa
+   - Animation co giãn nhẹ (pulse) liên tục và mượt mà
+   ========================================================================== */
+.floating-contact-btn {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #0084ff;
+    background-image: linear-gradient(135deg, #0084ff 0%, #0066ff 100%);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    z-index: 1000;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(0, 132, 255, 0.45);
+    animation: pulse 2s ease-in-out infinite;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Biểu tượng nằm chính giữa */
+.floating-contact-btn .contact-icon {
+    width: 32px;
+    height: 32px;
+    display: block;
+    pointer-events: none;
+}
+
+/* Tương tác khi di chuột (Hover) và tiêu điểm (Focus) */
+.floating-contact-btn:hover {
+    transform: scale(1.15);
+    box-shadow: 0 8px 24px rgba(0, 132, 255, 0.65);
+    animation-play-state: paused; /* Tạm dừng rung lắc khi người dùng muốn nhấp chuột */
+}
+
+.floating-contact-btn:focus-visible {
+    outline: 3px solid #0084ff;
+    outline-offset: 4px;
+}
+
+/* ==========================================================================
+   CSS ANIMATION: @keyframes pulse
+   - Thay đổi transform: scale() từ 1 lên 1.1 và ngược lại (1 -> 1.1 -> 1)
+   - Hiệu ứng box-shadow lan tỏa nhẹ khi co giãn để thu hút sự chú ý
+   ========================================================================== */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 4px 14px rgba(0, 132, 255, 0.45), 0 0 0 0 rgba(0, 132, 255, 0.5);
+    }
+    50% {
+        transform: scale(1.1);
+        box-shadow: 0 8px 25px rgba(0, 132, 255, 0.65), 0 0 0 14px rgba(0, 132, 255, 0);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 4px 14px rgba(0, 132, 255, 0.45), 0 0 0 0 rgba(0, 132, 255, 0);
+    }
+}
+
+/* Tối ưu hóa kích thước nút trên màn hình di động */
+@media (max-width: 768px) {
+    .floating-contact-btn {
+        bottom: 20px;
+        right: 20px;
+        width: 52px;
+        height: 52px;
+    }
+
+    .floating-contact-btn .contact-icon {
+        width: 28px;
+        height: 28px;
+    }
+}
+
+/* ==========================================================================
+   1. HIỆU ỨNG CARD FLIP CHO KHỐI THÔNG TIN BÊN TRÁI (SIDEBAR 3D FLIP CARD)
+   - Chuyển khối thông tin Avatar, Tên, Trạng thái, Chức danh, Mô tả thành thẻ lật 3D
+   - Mặt trước (Front): Giữ nguyên giao diện ban đầu
+   - Mặt sau (Back): Thiết kế đẹp mắt tông trắng/xanh, hiển thị Liên hệ + Nút Xem CV
+   - Hiệu ứng lật 180 độ 3D quanh trục Y khi hover với perspective
+   ========================================================================== */
+.sidebar-flip-card-wrapper {
+    perspective: 1200px;
+    width: 100%;
+}
+
+.sidebar-flip-card {
+    width: 100%;
+    min-height: 380px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+    cursor: pointer;
+    border-radius: var(--radius-lg, 16px);
+    outline: none;
+}
+
+/* Khi rê chuột hoặc dùng phím Tab focus: Thẻ lật 180 độ theo trục Y */
+.sidebar-flip-card:hover,
+.sidebar-flip-card:focus-visible {
+    transform: rotateY(180deg);
+}
+
+/* Quy định chung cho cả hai mặt thẻ */
+.sidebar-card-front,
+.sidebar-card-back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: var(--radius-lg, 16px);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-6) var(--space-4);
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+/* Mặt trước: Giữ nguyên giao diện ban đầu */
+.sidebar-card-front {
+    background-color: var(--color-surface, #ffffff);
+    border: 1px solid var(--color-border, #e2e8f0);
+    background-image: radial-gradient(at 50% 0%, var(--color-primary-fade) 0px, var(--color-transparent) 70%);
+    transform: rotateY(0deg);
+}
+
+.sidebar-flip-card:hover .sidebar-card-front,
+.sidebar-flip-card:hover .sidebar-card-back {
+    box-shadow: 0 12px 28px rgba(79, 70, 229, 0.12);
+}
+
+.sidebar-card-hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.78rem;
+    color: var(--color-primary, #4f46e5);
+    background: var(--color-primary-subtle, #eef2ff);
+    padding: 4px 10px;
+    border-radius: 20px;
+    margin-top: var(--space-3);
+    font-weight: 500;
+    pointer-events: none;
+}
+
+/* Mặt sau: Tông màu trắng/xanh tươi sáng, hiện đại */
+.sidebar-card-back {
+    background: linear-gradient(160deg, #ffffff 0%, #f0f9ff 45%, #e0f2fe 100%);
+    border: 1px solid #bae6fd;
+    transform: rotateY(180deg);
+    text-align: center;
+    padding: var(--space-7) var(--space-5);
+}
+
+.back-avatar-small {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 1.1rem;
+    letter-spacing: -0.02em;
+    box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
+    margin-bottom: var(--space-3);
+}
+
+.back-contact-heading {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #0369a1;
+    margin-bottom: var(--space-1);
+}
+
+.back-contact-desc {
+    font-size: 0.82rem;
+    color: #475569;
+    margin-bottom: var(--space-5);
+    line-height: 1.4;
+}
+
+/* Nhóm 3 icon mạng xã hội nhỏ (Email, GitHub, LinkedIn) */
+.back-social-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: var(--space-6);
+}
+
+.back-social-icon-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 1px solid #7dd3fc;
+    color: #0284c7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 2px 6px rgba(2, 132, 199, 0.1);
+}
+
+.back-social-icon-btn:hover {
+    transform: translateY(-3px) scale(1.08);
+    background: #0284c7;
+    color: #ffffff;
+    box-shadow: 0 6px 14px rgba(2, 132, 199, 0.35);
+}
+
+/* Nút nổi bật: Xem CV của tôi */
+.btn-cv-prominent {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    max-width: 220px;
+    padding: 11px 18px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+    color: #ffffff;
+    font-size: 0.92rem;
+    font-weight: 700;
+    text-decoration: none;
+    box-shadow: 0 6px 16px rgba(2, 132, 199, 0.35);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+
+.btn-cv-prominent:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, #0369a1 0%, #075985 100%);
+    box-shadow: 0 8px 20px rgba(2, 132, 199, 0.45);
+}
+
+/* ==========================================================================
+   2. HIỆU ỨNG MÁY ĐÁNH CHỮ (TYPEWRITER EFFECT)
+   - Tiêu đề gradient xanh/tím nổi bật
+   - Chữ chạy ra từng ký tự từ trái sang phải, con trỏ nhấp nháy (|)
+   - Chạy hết câu dừng 3 giây rồi xóa đi và lặp lại
+   ========================================================================== */
+.hero-header {
+    background: var(--color-surface, #ffffff);
+    border: 1px solid var(--color-border, #e2e8f0);
+    border-radius: 20px;
+    padding: var(--space-8) var(--space-10);
+    margin-bottom: var(--space-10);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-header::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 6px;
+    height: 100%;
+    background: linear-gradient(to bottom, var(--color-primary, #4f46e5), var(--color-secondary, #06b6d4));
+}
+
+.hero-eyebrow {
+    display: inline-block;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--color-text-muted, #64748b);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: var(--space-3);
+}
+
+.typewriter-container {
+    margin: var(--space-2) 0 var(--space-3);
+    min-height: 2.8rem;
+    display: flex;
+    align-items: center;
+    white-space: nowrap; /* Bắt buộc: Giữ toàn bộ chữ trên 1 hàng duy nhất */
+    overflow: hidden;    /* Đảm bảo không tràn khỏi khung */
+    max-width: 100%;
+}
+
+.typewriter-heading {
+    font-size: clamp(1.15rem, 2.4vw, 1.85rem);
+    font-weight: 800;
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+    margin: 0;
+    white-space: nowrap; /* Tuyệt đối không cho ngắt dòng */
+    display: inline-flex;
+    align-items: baseline;
+    flex-wrap: nowrap;   /* Ngăn chia dòng */
+}
+
+/* Gradient xanh/tím nổi bật theo đúng thiết kế của trang */
+.typewriter-text {
+    background: linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: inline;
+    white-space: nowrap; /* Đảm bảo từng từ không rớt dòng */
+}
+
+/* Con trỏ nhấp nháy (|) */
+.typewriter-cursor {
+    display: inline-block;
+    color: #4f46e5;
+    font-weight: 300;
+    margin-left: 2px;
+    -webkit-text-fill-color: #4f46e5;
+    animation: blinkCursor 0.8s step-end infinite;
+    white-space: nowrap;
+}
+
+@keyframes blinkCursor {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+}
+
+.hero-subtitle {
+    margin-top: var(--space-3);
+    margin-bottom: 0;
+    font-size: 0.95rem;
+    color: var(--color-text-body, #334155);
+}
+
+/* Thích ứng trên màn hình máy tính bảng và di động: Giữ 1 dòng duy nhất */
+@media (max-width: 1024px) {
+    .typewriter-heading {
+        font-size: clamp(1rem, 2.3vw, 1.45rem);
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-header {
+        padding: var(--space-6) var(--space-6);
+        margin-bottom: var(--space-7);
+    }
+
+    .typewriter-heading {
+        font-size: clamp(0.95rem, 3.4vw, 1.25rem);
+    }
+
+    .sidebar-flip-card {
+        min-height: 360px;
+    }
+}
+
+@media (max-width: 480px) {
+    .typewriter-heading {
+        font-size: clamp(0.82rem, 4.2vw, 1.02rem);
+    }
+}
+
+/* ==========================================================================
+   3. HIỆU ỨNG PARALLAX SECTION (PARALLAX SCROLLING EFFECT)
+   - background-attachment: fixed tạo hiệu ứng thị sai khi cuộn trang
+   - background-position: center căn giữa hình ảnh nền
+   - background-size: cover phủ kín toàn bộ khung hình
+   - Đảm bảo hiển thị tối ưu trên cả Desktop và Mobile
+   ========================================================================== */
+.parallax-section {
+    position: relative;
+    min-height: 400px;
+    background-color: #0f172a;
+    background-image: url('https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1600&auto=format&fit=crop&q=80');
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: var(--radius-lg, 16px);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: var(--space-12) var(--space-6);
+    margin-bottom: var(--space-14);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.12);
+}
+
+/* Lớp phủ Overlay tạo chiều sâu và độ tương phản cao cho chữ */
+.parallax-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.82) 0%, rgba(79, 70, 229, 0.72) 100%);
+    z-index: 1;
+}
+
+/* Nội dung chữ nổi bật bên trên */
+.parallax-content {
+    position: relative;
+    z-index: 2;
+    max-width: 680px;
+    color: #ffffff;
+    padding: var(--space-4);
+}
+
+.parallax-badge {
+    display: inline-block;
+    padding: 6px 16px;
+    background: rgba(255, 255, 255, 0.16);
+    color: #e0e7ff;
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 20px;
+    margin-bottom: var(--space-4);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.parallax-title {
+    font-size: clamp(1.4rem, 3.2vw, 2.1rem);
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.35;
+    margin-bottom: var(--space-4);
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+}
+
+.parallax-desc {
+    font-size: clamp(0.95rem, 1.8vw, 1.05rem);
+    color: #e2e8f0;
+    line-height: 1.6;
+    margin-bottom: var(--space-8);
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Nút kêu gọi hành động CTA */
+.btn-parallax-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 28px;
+    border-radius: 12px;
+    background: #ffffff;
+    color: var(--color-primary, #4f46e5);
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-decoration: none;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+}
+
+.btn-parallax-cta:hover {
+    transform: translateY(-3px) scale(1.02);
+    background: #f8fafc;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+    color: var(--color-primary-hover, #4338ca);
+}
+
+/* Đảm bảo ảnh hiển thị tối ưu trên thiết bị di động (Mobile & Tablet) */
+@media (max-width: 768px) {
+    .parallax-section {
+        min-height: 320px;
+        padding: var(--space-8) var(--space-4);
+        margin-bottom: var(--space-10);
+        background-attachment: scroll; /* Tối ưu hóa hiệu năng cuộn trên iOS và Android */
+        background-position: center center;
+        background-size: cover;
+    }
+
+    .parallax-title {
+        font-size: 1.25rem;
+    }
+
+    .parallax-desc {
+        font-size: 0.88rem;
+        margin-bottom: var(--space-6);
+    }
+}
+
+/* ==========================================================================
+   4. NÚT HAMBURGER HIỆN ĐẠI & NAVIGATION DRAWER MENU DI ĐỘNG
+   - Nút hamburger nhỏ gọn màu xanh (3 vạch ngang) ở góc trên bên phải card trắng
+   - Dropdown navigation drawer trượt ra từ bên phải, nền trắng, bo góc tròn, bóng đổ nhẹ
+   - Lớp phủ mờ tối (darkened & blurred overlay)
+   - Nút "X" đóng menu ở góc trên bên phải
+   - 7 mục điều hướng thiết yếu kèm icon trực quan
+   ========================================================================== */
+
+/* Nút Hamburger hiện đại ở góc trên bên phải của Card trắng */
+.card-hamburger-btn {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background-color: #f0f4ff;
+    border: 1px solid #dbeafe;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4.5px;
+    cursor: pointer;
+    z-index: 10;
+    transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 2px 6px rgba(79, 70, 229, 0.08);
+}
+
+.card-hamburger-btn:hover {
+    background-color: #e0e7ff;
+    transform: scale(1.06);
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.18);
+}
+
+.card-hamburger-btn:focus-visible {
+    outline: 2px solid var(--color-primary, #4f46e5);
+    outline-offset: 2px;
+}
+
+/* 3 vạch ngang màu xanh hiện đại */
+.card-hamburger-btn .h-line {
+    display: block;
+    width: 18px;
+    height: 2.2px;
+    background-color: #2563eb; /* Sắc xanh dương hiện đại */
+    border-radius: 2px;
+    transition: transform 0.25s ease, background-color 0.2s ease;
+}
+
+.card-hamburger-btn:hover .h-line {
+    background-color: #1d4ed8;
+}
+
+/* Lớp phủ hậu cảnh mờ và tối nhẹ (Darkened & Blurred Overlay) */
+.mobile-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(15, 23, 42, 0.5);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+
+.mobile-menu-overlay.is-open {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Navigation Drawer Dropdown Menu ở bên phải */
+.mobile-nav-drawer {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 310px;
+    max-width: calc(100vw - 40px);
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 20px 45px rgba(15, 23, 42, 0.2), 0 4px 16px rgba(15, 23, 42, 0.08);
+    border: 1px solid rgba(226, 232, 240, 0.9);
+    z-index: 2001;
+    padding: 20px 18px 22px;
+    box-sizing: border-box;
+    transform: translateY(-16px) scale(0.94);
+    opacity: 0;
+    visibility: hidden;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.mobile-nav-drawer.is-open {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Header của Drawer kèm nút "X" ở góc trên bên phải */
+.drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 14px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.drawer-title {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #475569;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Nút "X" đóng menu */
+.drawer-close-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    background-color: #f8fafc;
+    color: #64748b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+}
+
+.drawer-close-btn:hover {
+    background-color: #fee2e2;
+    color: #ef4444;
+    border-color: #fca5a5;
+    transform: rotate(90deg);
+}
+
+/* Danh sách 7 mục điều hướng xếp dọc */
+.drawer-nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.drawer-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: 12px;
+    text-decoration: none;
+    color: #1e293b;
+    font-weight: 600;
+    font-size: 0.93rem;
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.drawer-nav-link:hover {
+    background-color: #eef2ff;
+    color: #4f46e5;
+    transform: translateX(4px);
+}
+
+/* Icon box cho từng mục */
+.drawer-icon-box {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    background-color: #f1f5f9;
+    color: #4f46e5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.drawer-nav-link:hover .drawer-icon-box {
+    background-color: #4f46e5;
+    color: #ffffff;
+}
+
+.drawer-link-text {
+    flex-grow: 1;
+}
+
+/* ==========================================================================
+   YÊU CẦU: THANH TIẾN TRÌNH KỸ NĂNG (SKILL PROGRESS BARS)
+   - Khung nền (Class cha): .progress-bar
+   - Thanh màu hiển thị phần trăm (Class con): .progress-fill
+   - Animation: @keyframes fillBar thay đổi width từ 0 đến giá trị mong muốn trong 2s
+   - animation-fill-mode: forwards để thanh giữ nguyên vị trí sau khi chạy xong
+   - Tự động chạy khi trang web được tải với hiệu ứng mượt mà
+   ========================================================================== */
+
+/* Card chứa toàn bộ danh sách tiến trình kỹ năng */
+.skills-progress-card {
+    background-color: #ffffff;
+    border: 1px solid rgba(226, 232, 240, 0.9);
+    border-radius: 20px;
+    padding: 26px 28px;
+    margin-bottom: 36px;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+}
+
+.skills-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.skills-card-title-group {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.skills-card-icon {
+    font-size: 1.8rem;
+    line-height: 1;
+}
+
+.skills-card-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0 0 4px 0;
+}
+
+.skills-card-subtitle {
+    font-size: 0.88rem;
+    color: #64748b;
+    margin: 0;
+}
+
+.skills-card-badge {
+    display: inline-flex;
+    align-items: center;
+    background-color: #eff6ff;
+    color: #2563eb;
+    border: 1px solid #bfdbfe;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 9999px;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+}
+
+/* Lưới bố cục 2 cột trên Desktop, 1 cột trên Mobile */
+.skills-progress-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px 28px;
+}
+
+@media (max-width: 768px) {
+    .skills-progress-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+    
+    .skills-progress-card {
+        padding: 20px 18px;
+    }
+}
+
+.skill-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.skill-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.skill-name {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: #1e293b;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.skill-tag {
+    display: inline-block;
+    background-color: #f1f5f9;
+    color: #334155;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 6px;
+    border: 1px solid #e2e8f0;
+}
+
+.skill-percent {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #2563eb;
+    font-variant-numeric: tabular-nums;
+}
+
+/* --------------------------------------------------------------------------
+   YÊU CẦU KỸ THUẬT BẮT BUỘC:
+   1. Class cha làm khung nền: .progress-bar
+   2. Class con làm thanh màu hiển thị phần trăm: .progress-fill
+   3. @keyframes fillBar thay đổi width từ 0 đến giá trị mong muốn
+   4. animation-fill-mode: forwards để thanh giữ nguyên vị trí sau khi chạy xong
+   5. Chạy trong vòng 2 giây (2s) với hiệu ứng mượt mà (ease-out / cubic-bezier)
+   -------------------------------------------------------------------------- */
+
+/* Class cha làm khung nền */
+.progress-bar {
+    width: 100%;
+    height: 12px;
+    background-color: #e2e8f0;
+    border-radius: 9999px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+/* Class con làm thanh màu hiển thị phần trăm */
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #2563eb, #6366f1);
+    border-radius: 9999px;
+    position: relative;
+    box-shadow: 0 0 10px rgba(37, 99, 235, 0.35);
+    animation: fillBar 2s cubic-bezier(0.25, 1, 0.5, 1) 5s forwards;
+    animation-delay: 5s;
+    animation-fill-mode: forwards;
+}
+
+/* Hiệu ứng ánh sáng bóng mượt trên thanh tiến trình */
+.progress-fill::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0) 100%);
+    border-radius: inherit;
+}
+
+/* @keyframes fillBar thay đổi width từ 0 đến giá trị mong muốn */
+@keyframes fillBar {
+    from {
+        width: 0%;
+    }
+    to {
+        width: var(--target-width, 80%);
+    }
+}
+
+/* Modifier classes cho từng kỹ năng cụ thể */
+.progress-fill.html {
+    --target-width: 90%;
+    animation-name: fillBarHTML;
+}
+
+.progress-fill.css {
+    --target-width: 85%;
+    animation-name: fillBarCSS;
+}
+
+.progress-fill.js {
+    --target-width: 80%;
+    animation-name: fillBar; /* Dùng trực tiếp fillBar đạt 80% theo ví dụ */
+}
+
+.progress-fill.responsive {
+    --target-width: 95%;
+    animation-name: fillBarResponsive;
+}
+
+.progress-fill.uiux {
+    --target-width: 75%;
+    animation-name: fillBarUIUX;
+}
+
+/* Keyframes dự phòng tương thích cao cho từng mức phần trăm */
+@keyframes fillBarHTML {
+    from {
+        width: 0%;
+    }
+    to {
+        width: 90%;
+    }
+}
+
+@keyframes fillBarCSS {
+    from {
+        width: 0%;
+    }
+    to {
+        width: 85%;
+    }
+}
+
+@keyframes fillBarResponsive {
+    from {
+        width: 0%;
+    }
+    to {
+        width: 95%;
+    }
+}
+
+@keyframes fillBarUIUX {
+    from {
+        width: 0%;
+    }
+    to {
+        width: 75%;
+    }
+}
+
+
+
+
+
+

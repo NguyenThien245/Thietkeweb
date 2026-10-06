@@ -1,0 +1,129 @@
+/* ========================================================
+   1. RESET & BOX MODEL
+   ======================================================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: sans-serif;
+  background-color: #f4f4f4;
+  color: #333333;
+  line-height: 1.6;
+}
+
+/* ========================================================
+   2. BỐ CỤC LƯỚI TỔNG THỂ (CSS Grid & grid-template-areas)
+   ======================================================== */
+.portfolio-layout {
+  display: grid;
+  grid-template-columns: 250px 1fr; /* Sidebar 250px, Main chiếm phần còn lại */
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    "header header"
+    "sidebar main"
+    "footer footer";
+  min-height: 100vh;
+  gap: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Gán từng khối theo grid-template-areas */
+.header {
+  grid-area: header;
+  background-color: #2c3e50;
+  color: #ffffff;
+  padding: 20px;
+  border-radius: 6px;
+}
+
+.header h1 {
+  margin-bottom: 5px;
+}
+
+.sidebar {
+  grid-area: sidebar;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 6px;
+  border: 1px solid #dddddd;
+}
+
+.sidebar h3 {
+  margin-bottom: 15px;
+  border-bottom: 1px solid #eeeeee;
+  padding-bottom: 8px;
+}
+
+.sidebar p {
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.main-content {
+  grid-area: main;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.section {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 6px;
+  border: 1px solid #dddddd;
+}
+
+.section h2 {
+  margin-bottom: 15px;
+  color: #2c3e50;
+}
+
+/* ========================================================
+   3. KHU VỰC KỸ NĂNG (Flexbox: wrap, gap 15px, căn giữa)
+   ======================================================== */
+.skills-list {
+  display: flex;
+  flex-wrap: wrap;         /* Tự động xuống dòng khi màn hình nhỏ */
+  gap: 15px;               /* Khoảng cách giữa các item là 15px */
+  justify-content: center; /* Căn giữa các item */
+}
+
+.skill-item {
+  background-color: #e9ecef;
+  color: #333333;
+  padding: 10px 18px;
+  border-radius: 6px;
+  border: 1px solid #cccccc;
+  font-weight: bold;
+}
+
+/* ========================================================
+   4. DỰ ÁN ĐƠN GIẢN
+   ======================================================== */
+.project-box {
+  background-color: #fafafa;
+  padding: 15px;
+  border: 1px solid #eeeeee;
+  border-radius: 6px;
+}
+
+.project-box h4 {
+  margin-bottom: 6px;
+}
+
+/* ========================================================
+   5. FOOTER
+   ======================================================== */
+.footer {
+  grid-area: footer;
+  background-color: #2c3e50;
+  color: #ffffff;
+  text-align: center;
+  padding: 15px;
+  border-radius: 6px;
+}

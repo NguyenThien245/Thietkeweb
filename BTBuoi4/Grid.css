@@ -1,0 +1,61 @@
+/* Reset căn bản */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  padding: 60px 20px;
+  background-color: #ffffff;
+  color: #333333;
+}
+
+/* 1. Bố cục lưới CSS Grid */
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 cột bằng nhau */
+  gap: 20px;                            /* Khoảng cách giữa các cột là 20px */
+  max-width: 1000px;                    /* Giới hạn độ rộng lưới để cân đối */
+  margin: 0 auto;                       /* Căn giữa trang */
+}
+
+/* 2. Thẻ bên trong mỗi cột */
+.grid-item {
+  background-color: #f8fafc;            /* Màu xám nhạt hiện đại */
+  border-radius: 10px;                  /* Bo góc 10px theo yêu cầu */
+  border: 1px solid #e2e8f0;            /* Viền mỏng giúp thẻ rõ ràng, sắc nét hơn */
+  padding: 32px 24px;                   /* Đệm trong rộng rãi, thoáng mắt */
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.04); /* Đổ bóng nhẹ tạo độ nổi khối */
+  
+  /* Tạo chuyển động mượt mà khi rê chuột vào */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+/* 3. Hiệu ứng khi rê chuột vào thẻ (:hover) */
+.grid-item:hover {
+  transform: translateY(-6px);          /* Nhấc thẻ lên 6px */
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08); /* Đổ bóng đậm hơn */
+  border-color: #cbd5e1;                /* Viền đậm hơn 1 chút */
+}
+
+/* 4. Làm đẹp icon và chữ */
+.grid-item .icon {
+  font-size: 36px;                      /* Kích thước emoji/icon */
+  margin-bottom: 12px;
+}
+
+.grid-item h3 {
+  margin-bottom: 10px;
+  color: #1e293b;                       /* Màu chữ tiêu đề đậm nét */
+  font-size: 20px;
+}
+
+.grid-item p {
+  color: #64748b;                       /* Màu chữ nội dung xám dễ nhìn */
+  line-height: 1.6;                     /* Khoảng cách dòng thoáng mắt */
+  font-size: 15px;
+}
