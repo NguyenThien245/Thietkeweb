@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HD1 - The Element Picker</title>
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 0; padding: 20px; background: #f8fafc; color: #334155; }
+    h1 { margin-top: 0; }
+    .note { background: #eef2ff; border-left: 4px solid #4f46e5; padding: 10px 14px; border-radius: 6px; }
+    table { width: 100%; border-collapse: collapse; margin: 16px 0; background: #fff; }
+    th, td { border: 1px solid #e2e8f0; padding: 8px 10px; text-align: left; font-size: 14px; vertical-align: top; }
+    th { background: #4f46e5; color: #fff; }
+    code { background: #f1f5f9; padding: 2px 5px; border-radius: 4px; }
+    .found { color: #166534; font-weight: 600; }
+    .missing { color: #dc2626; font-weight: 600; }
+    iframe { width: 100%; height: 420px; border: 1px solid #cbd5e1; border-radius: 8px; background: #fff; }
+  </style>
+</head>
+<body>
+  <h1>Hoạt động 1: The Element Picker</h1>
+  <p class="note">
+    Mở <b>F12 → Console</b> để xem kết quả <code>console.log(document.querySelector('.class-name'))</code>.
+    Trang này nạp trang Portfolio (<code>index.html</code>) vào khung bên dưới rồi tìm các thẻ theo class.
+    Cần mở bằng Live Server hoặc GitHub Pages (không mở trực tiếp bằng file://).
+  </p>
+
+  <table>
+    <thead><tr><th>Selector</th><th>Kết quả</th><th>Thẻ tìm được</th><th>Số phần tử cùng class</th></tr></thead>
+    <tbody id="result-body"></tbody>
+  </table>
+
+  <h2>Portfolio (index.html)</h2>
+  <iframe id="project-frame" src="index.html" title="Trang Portfolio"></iframe>
+
+  <script>
+    // Danh sách class cần "truy tìm" trong dự án Portfolio
+    var selectors = [
+      '.hero-header',
+      '.section-title',
+      '.btn-primary',
+      '.portfolio-sidebar',
+      '.sidebar-nav',
+      '.contact-card-grid',
+      '.site-footer',
+      '.class-khong-ton-tai' // cố ý sai để thấy kết quả null
+    ];
+
+    var frame = document.getElementById('project-frame');
+    var body = document.getElementById('result-body');
+
+    // Chạy khi trang Portfolio trong khung đã tải xong
+    frame.addEventListener('load', function () {
+      var doc;
+      try {
+        doc = frame.contentDocument; // document của trang Portfolio
+        if (!doc) throw new Error('Không truy cập được');
+      } catch (err) {
+        body.innerHTML = '<tr><td colspan="4" class="missing">Không đọc được index.html. Hãy chạy bằng Live Server / GitHub Pages.</td></tr>';
+        return;
+      }
+
+      body.innerHTML = '';
+      selectors.forEach(function (sel) {
+        // Cú pháp cần dùng của đề bài: querySelector trả về PHẦN TỬ ĐẦU TIÊN khớp, hoặc null
+        var el = doc.querySelector(sel);
+        console.log("document.querySelector('" + sel + "') =", el);
+
+        var row = document.createElement('tr');
+        var count = doc.querySelectorAll(sel).length;
+        var cells = [
+          sel,
+          el ? 'Tìm thấy' : 'null (không có)',
+          el ? '<' + el.tagName.toLowerCase() + '>' + (el.id ? ' #' + el.id : '') : '—',
+          String(count)
+        ];
+        cells.forEach(function (text, i) {
+          var td = document.createElement('td');
+          td.textContent = text; // textContent: an toàn, không chèn HTML
+          if (i === 1) td.className = el ? 'found' : 'missing';
+          row.appendChild(td);
+        });
+        body.appendChild(row);
+      });
+    });
+  </script>
+</body>
+</html>

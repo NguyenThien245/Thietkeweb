@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HD2 - Light Switch</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px;
+      font-family: system-ui, sans-serif;
+      background: #ffffff; color: #111827;   /* nền trắng khi đèn sáng */
+      transition: background 0.4s, color 0.4s;
+    }
+    body.dark { background: #0b0f19; color: #f1f5f9; } /* nền đen khi đèn tắt */
+    #lamp { width: 140px; height: auto; }
+    #toggle-btn {
+      padding: 12px 28px; font-size: 16px; font-weight: 600; cursor: pointer;
+      border: none; border-radius: 10px; background: #4f46e5; color: #fff;
+    }
+    #toggle-btn:hover { background: #4338ca; }
+    #status { margin: 0; font-size: 18px; }
+  </style>
+</head>
+<body>
+  <h1>Hoạt động 2: Light Switch</h1>
+  <img id="lamp" src="img/lamp-on.svg" alt="Đèn đang sáng">
+  <p id="status">Đèn đang SÁNG</p>
+  <button type="button" id="toggle-btn">Tắt đèn</button>
+
+  <script>
+    var lamp = document.getElementById('lamp');
+    var btn = document.getElementById('toggle-btn');
+    var statusText = document.getElementById('status');
+    var isOn = true; // trạng thái hiện tại của đèn
+
+    // Click nút -> đảo trạng thái, đổi thuộc tính src của ảnh và nền body
+    btn.addEventListener('click', function () {
+      isOn = !isOn;
+
+      if (isOn) {
+        lamp.src = 'img/lamp-on.svg';          // đổi src: đèn sáng
+        lamp.alt = 'Đèn đang sáng';
+        document.body.classList.remove('dark'); // nền trắng
+        statusText.textContent = 'Đèn đang SÁNG';
+        btn.textContent = 'Tắt đèn';
+      } else {
+        lamp.src = 'img/lamp-off.svg';         // đổi src: đèn tắt
+        lamp.alt = 'Đèn đang tắt';
+        document.body.classList.add('dark');   // nền đen
+        statusText.textContent = 'Đèn đang TẮT';
+        btn.textContent = 'Bật đèn';
+      }
+    });
+  </script>
+</body>
+</html>
